@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasneem Selim – Computer Vision & AI Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #f6f0f2;
+      --surface:   #f6f0f2;
+      --border:    rgba(75,0,130,0.25);
+      --text:      #000000;
+      --muted:     rgba(0,0,0,0.62);
+      --accent:    #4b0082;
+      --accent2:   #4b0082;
+      --link:      #4b0082;
+      --heading:   #4b0082;
+      --radius:    4px;
+      --sidebar-w: 260px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Top Nav ── */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      padding: 0 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    }
+    .topnav a {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 14px 16px;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .topnav a:hover,
+    .topnav a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 0 16px;
+      gap: 40px;
+    }
+
+    /* ── News Sidebar (right) ── */
+    .news-sidebar {
+      width: 230px;
+      flex-shrink: 0;
+      padding: 48px 0;
+    }
+    .news-sidebar h3 {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .news-sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .news-sidebar li { font-size: 12px; line-height: 1.55; color: var(--muted); padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .news-sidebar li:last-child { border-bottom: none; }
+    .news-sidebar .news-date { display: block; font-size: 11px; color: var(--accent); font-weight: 600; margin-bottom: 2px; }
+    .news-sidebar strong { color: var(--text); font-weight: 600; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      padding: 48px 0;
+      position: sticky;
+      top: 49px;
+      height: calc(100vh - 49px);
+      overflow-y: auto;
+    }
+
+    .avatar-wrap {
+      width: 190px;
+      height: 240px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-initials { color: var(--muted); font-weight: 600; font-size: 42px; }
+
+    .sidebar h1 {
+      font-family: 'Lora', serif;
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+    .sidebar .role {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    /* .sidebar .location {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 5px;
+    } */
+
+    .sidebar .affiliations { margin-bottom: 16px; }
+    .sidebar .affiliations div {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .sidebar .affiliations strong { color: var(--text); font-weight: 600; }
+
+    .contact-links { display: flex; flex-direction: column; gap: 7px; }
+    .contact-links a {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+      transition: color .15s;
+    }
+    .contact-links a:hover { color: var(--accent); text-decoration: none; }
+    .contact-links svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ── Main content ── */
+    .main {
+      flex: 1;
+      padding: 48px 0;
+      min-width: 0;
+    }
+
+    section { margin-bottom: 56px; scroll-margin-top: 64px; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-family: 'Lora', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--heading);
+    }
+
+    /* ── About ── */
+    #about p {
+      font-size: 15.5px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    #about em { font-family: 'Lora', serif; font-style: italic; color: var(--muted); }
+
+    /* ── Divider ── */
+    .about-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    /* ── Publication Filters ── */
+    .pub-filters {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(75,0,130,0.03);
+    }
+    .filter-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-row-label {
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      width: 92px;
+      flex-shrink: 0;
+      padding-top: 5px;
+    }
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      flex: 1;
+    }
+    .filter-btn {
+      font-size: 12px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .filter-clear {
+      font-size: 11.5px;
+      color: var(--muted);
+      text-decoration: underline;
+      cursor: pointer;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+    .filter-clear:hover { color: var(--accent); }
+    .pub-empty {
+      font-size: 13.5px;
+      color: var(--muted);
+      font-style: italic;
+      padding: 10px 0;
+      display: none;
+    }
+
+    /* ── Collab cards ── */
+    .collab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .collab-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      font-size: 13.5px;
+    }
+    .collab-flag { font-size: 18px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
+    .collab-card strong { display: block; font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+    .collab-topic { font-size: 12px; color: var(--muted); display: block; }
+
+    /* ── News ── */
+    .news-list { list-style: none; }
+    .news-list li {
+      display: flex;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .news-list li:last-child { border-bottom: none; }
+    .news-date {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 2px;
+      width: 90px;
+      flex-shrink: 0;
+    }
+
+    /* ── Publications ── */
+    .pub-list { list-style: none; display: flex; flex-direction: column; gap: 22px; }
+    .pub-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .pub-title { font-weight: 600; font-size: 14.5px; line-height: 1.45; margin-bottom: 5px; }
+    .pub-authors { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    .pub-authors strong { color: var(--text); font-weight: 600; }
+    .pub-venue { font-size: 12.5px; color: var(--muted); font-style: italic; }
+    .pub-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: 11.5px; padding: 2px 8px; border-radius: 3px; font-weight: 500; }
+    .tag-published { background: var(--bg); color: var(--accent); border: 1px solid var(--accent); }
+    .tag-review    { background: var(--bg); color: var(--accent); }
+    .tag-arxiv     { background: var(--bg); color: var(--muted); }
+    .tag-award     { background: var(--bg); color: var(--accent); font-weight: 600; }
+
+    /* ── Featured Publications ── */
+    .featured-pubs { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .featured-pub {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .featured-pub .pub-title { font-size: 15px; }
+    .subsection-label {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0 0 12px;
+    }
+
+    /* ── Experience ── */
+    .exp-list { display: flex; flex-direction: column; gap: 18px; }
+    .exp-item {
+      display: flex;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .exp-dot {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .exp-body { flex: 1; }
+    .exp-where { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 1px; }
+    .exp-role  { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+    .exp-period { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .exp-desc  { font-size: 13.5px; color: var(--muted); }
+
+    /* ── Education ── */
+    .edu-list { display: flex; flex-direction: column; gap: 18px; }
+    .edu-item { border-left: 3px solid var(--accent); padding-left: 16px; }
+    .edu-degree { font-weight: 600; font-size: 15px; }
+    .edu-school { font-size: 13.5px; color: var(--muted); margin-bottom: 3px; }
+    .edu-gpa { font-size: 13px; color: var(--accent2); font-weight: 500; }
+
+    /* ── Skills ── */
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-pill {
+      font-size: 13px;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      font-size: 12.5px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 720px) {
+      .topnav { overflow-x: auto; justify-content: flex-start; }
+      .topnav a { padding: 12px 12px; font-size: 11px; }
+      .layout { flex-direction: column; padding: 0 14px; }
+      .sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        padding: 32px 0 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .avatar-wrap { width: 140px; height: 176px; }
+      .main { padding: 28px 0; }
+      .news-sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        padding: 24px 0 32px;
+        border-top: 1px solid var(--border);
+      }
+      .collab-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ TOP NAV ══ -->
+<nav class="topnav" id="topnav">
+  <a href="#about">About</a>
+  <a href="#publications">Publications</a>
+  <a href="#experience">Experience</a>
+  <a href="#education">Education</a>
+  <a href="#teaching">Teaching</a>
+  <a href="#skills">Skills</a>
+</nav>
+
+<div class="layout">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="avatar-wrap">
+      <!-- Replace with: <img src="photo.jpg" alt="Tasneem Selim" /> -->
+      <img src="fig/Tasneem.jpg" alt="Tasneem Selim" />
+      <span class="avatar-initials">TS</span>
+    </div>
+
+    <h1>Tasneem Selim</h1>
+    <p class="role">Researcher · Computer Vision &amp; AI</p>
+
+    <div class="affiliations">
+      <div><strong>Alexandria University</strong> — Researcher &amp; Assistant Lecturer</div>
+      <div><strong>Basira Lab</strong>, Imperial College London (I-X) — Research Intern</div>
+    </div>
+
+    <div class="contact-links">
+      <a href="mailto:tasneem.mselim@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        tasneem.mselim@gmail.com
+      </a>
+      <a href="https://scholar.google.com/citations?hl=en&user=qrbLDz4AAAAJ&view_op=list_works&gmla=AC6lMd-D-cegOC5KFmpT_sscR5l1nbhERpmPSfpDW46YsLfZX6RWq0fYfRlOH2Vi7QS4gdfLFvHG-sH7FLLtMOpW" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3L1 9l11 6 9-4.91V17M5 13.18v4L12 21l7-3.82v-4"/></svg>
+        Google Scholar
+      </a>
+      <a href="https://github.com/tasneem-mselim" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/tasneem-selim-a7817a224/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>Tasneem Selim</h2>
+      <p>
+        I am an Assistant Lecturer in Computer Science at Alexandria University, Egypt, with an MSc in Computer Science specializing in Computer Vision and Deep Learning. I am also a research member of <a href="https://basira-lab.com/" target="_blank" rel="noopener">Basira Lab</a> at Imperial College London (I-X), working under the supervision of <a href="https://scholar.google.com/citations?user=tb6CVoAAAAAJ&hl=en" target="_blank" rel="noopener">Dr. Islem Rekik</a>.
+      </p>
+      <p>
+        My research focuses on Computer Vision, LLMs, Multi-agent AI, and AI in Education.
+      </p>
+      <p>
+        <strong style="color: var(--accent);">Actively seeking PhD opportunities in LLMs, multi-agent systems, computer vision, and AI in education.</strong>
+      </p>
+
+      <hr class="about-divider" />
+      <!-- <p style="margin-top:14px;">
+        📄 <a href="#">Download CV</a> &nbsp;·&nbsp; 📧 <a href="mailto:tasneem.mselim@gmail.com">Get in touch</a>
+      </p> -->
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications">
+      <h2>Publications</h2>
+
+      <div class="subsection-label">Featured Publications</div>
+      <div class="featured-pubs">
+        <div class="featured-pub">
+          <div class="pub-title">GNN-CB: A Graph Neural Network Competition Benchmark for Human and LLM Evaluation</div>
+          <div class="pub-authors">Murad Hossen*, <strong>Tasneem Selim*</strong>, et al. <span style="font-style:italic;">(*co-first authors)</span></div>
+          <div class="pub-venue">EMNLP 2026 (Main Conference)</div>
+          <div class="pub-tags"><span class="tag tag-published">Accepted</span></div>
+        </div>
+        <div class="featured-pub">
+          <div class="pub-title">Students Engagement Level Detection in Online E-Learning Using Hybrid EfficientNetB7 Together with TCN, LSTM, and Bi-LSTM</div>
+          <div class="pub-authors"><strong>Tasneem Selim</strong>, Islam Elkabani, Mohamed A. Abdou</div>
+          <div class="pub-venue">IEEE Access, vol. 10, pp. 99573–99583, 2022</div>
+          <div class="pub-tags"><span class="tag tag-published">Published</span><span class="tag tag-award">100+ Citations</span></div>
+        </div>
+      </div>
+
+      <div class="subsection-label">All Publications</div>
+
+      <div class="pub-filters" id="pubFilters">
+        <div class="filter-row">
+          <div class="filter-row-label">Tags</div>
+          <div class="filter-options" data-group="tag">
+            <button class="filter-btn" data-value="aiineducation">AI in Education</button>
+            <button class="filter-btn" data-value="llm">LLM</button>
+            <button class="filter-btn" data-value="multiagent">Multi-agent</button>
+            <button class="filter-btn" data-value="computervision">Computer Vision</button>
+            <button class="filter-btn" data-value="gnn">GNN</button>
+            <button class="filter-btn" data-value="medical">Medical</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-row-label">Institution</div>
+          <div class="filter-options" data-group="inst">
+            <button class="filter-btn" data-value="alexandria">Alexandria University</button>
+            <button class="filter-btn" data-value="basira">Basira Lab, Imperial</button>
+            <button class="filter-btn" data-value="cincinnati">Cincinnati</button>
+            <button class="filter-btn" data-value="fatima">Fatima</button>
+            <button class="filter-btn" data-value="exeter">Exeter</button>
+            <button class="filter-btn" data-value="galway">Galway</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-row-label">Authorship</div>
+          <div class="filter-options" data-group="author">
+            <button class="filter-btn" data-value="first">First Author</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-row-label">Status</div>
+          <div class="filter-options" data-group="status">
+            <button class="filter-btn" data-value="published">Published</button>
+            <button class="filter-btn" data-value="accepted">Accepted</button>
+            <button class="filter-btn" data-value="underreview">Under Review</button>
+          </div>
+        </div>
+        <span class="filter-clear" id="pubFilterClear">Clear all filters</span>
+      </div>
+
+      <ul class="pub-list" id="pubList">
+
+        <li class="pub-item" data-tag="gnn llm" data-inst="basira" data-author="first" data-status="accepted">
+          <div class="pub-title">GNN-CB: A Graph Neural Network Competition Benchmark for Human and LLM Evaluation</div>
+          <div class="pub-authors">Murad Hossen*, <strong>Tasneem Selim*</strong>, et al. <span style="font-style:italic;">(*co-first authors)</span></div>
+          <div class="pub-venue">EMNLP 2026 (Main Conference)</div>
+          <div class="pub-tags"><span class="tag tag-published">Accepted</span></div>
+        </li>
+
+        <li class="pub-item" data-tag="medical" data-inst="exeter" data-author="" data-status="underreview">
+          <div class="pub-title">Causal Transfer in Medical Image Analysis</div>
+          <div class="pub-authors">Mohammed M. Abdelsamea, Daniel Tweneboah Anyimadu, <strong>Tasneem Selim</strong>, Saif Alzubi, Lei Zhang, Ahmed Karam Eldaly, Xujiong Ye</div>
+          <div class="pub-venue">arXiv:2603.24388 · Under Review · Information Fusion (2026)</div>
+          <div class="pub-tags"><span class="tag tag-review">Under Review</span><span class="tag tag-arxiv">arXiv</span></div>
+        </li>
+
+        <li class="pub-item" data-tag="computervision" data-inst="alexandria" data-author="first" data-status="underreview">
+          <div class="pub-title">From Prompt to Visuals: A Survey on Text-Based Visual Generation Using GANs and Diffusion Models</div>
+          <div class="pub-authors"><strong>Tasneem Selim</strong>, Islam Elkabani, Mohamed M. Abdou</div>
+          <div class="pub-venue">Under Review · Cognitive Computation</div>
+          <div class="pub-tags"><span class="tag tag-review">Under Review</span></div>
+        </li>
+
+        <li class="pub-item" data-tag="aiineducation computervision" data-inst="alexandria" data-author="" data-status="underreview">
+          <div class="pub-title">Student Engagement Level Detection Using Lightweight Hybrid Mobilenet-V2 With LSTM &amp; Bi-LSTM — Extended Journal Version</div>
+          <div class="pub-authors">Shereen Mohammed, Mohamed M. Abdou, <strong>Tasneem Selim</strong></div>
+          <div class="pub-venue">Under Review · IAJIT (Special Issue)</div>
+          <div class="pub-tags"><span class="tag tag-review">Under Review</span></div>
+        </li>
+
+        <li class="pub-item" data-tag="aiineducation computervision" data-inst="alexandria" data-author="" data-status="published">
+          <div class="pub-title">Student Engagement Level Detection Using Lightweight Hybrid MobileNet-V2 With LSTM &amp; Bi-LSTM</div>
+          <div class="pub-authors">Shereen A. Mohamed, Mohamed A. Abdou, <strong>Tasneem Selim</strong></div>
+          <div class="pub-venue">IEEE · 26th International Arab Conference on Information Technology (ACIT), 2025</div>
+          <div class="pub-tags"><span class="tag tag-published">Published</span></div>
+        </li>
+
+        <li class="pub-item" data-tag="aiineducation computervision" data-inst="alexandria" data-author="first" data-status="published">
+          <div class="pub-title">Students Engagement Level Detection in Online E-Learning Using Hybrid EfficientNetB7 Together with TCN, LSTM, and Bi-LSTM</div>
+          <div class="pub-authors"><strong>Tasneem Selim</strong>, Islam Elkabani, Mohamed A. Abdou</div>
+          <div class="pub-venue">IEEE Access, vol. 10, pp. 99573–99583, 2022 · 100+ citations</div>
+          <div class="pub-tags"><span class="tag tag-published">Published</span><span class="tag tag-award">100+ Citations</span></div>
+        </li>
+
+      </ul>
+      <div class="pub-empty" id="pubEmpty">No publications match the selected filters.</div>
+    </section>
+
+    <!-- RESEARCH EXPERIENCE -->
+    <section id="experience">
+    <h2>Research Experience</h2>
+    <div style="margin-bottom:24px;">
+        <div class="section-label" style="margin-bottom:10px;"><h3>Alexandria University, Egypt · 2019 – Present</h3></div>
+        <div class="exp-list">
+
+          <div class="exp-item">
+            <div class="exp-body">
+              <div class="exp-role">Multi-Agent LLMs in Education</div>
+              <div class="exp-period">2026 – Present</div>
+              <div class="exp-desc">Proposing a multi-agent LLM framework for student-engagement classification, with specialized agents.</div>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-body">
+              <div class="exp-role">LLM Code-Generation Competition</div>
+              <div class="exp-period">2025 – Present</div>
+              <div class="exp-desc">Developing an LLM code-generation competition benchmarking engagement classification</div>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-body">
+              <div class="exp-role">Lightweight Hybrid MobileNet-V2 with LSTM &amp; Bi-LSTM for Student Engagement Detection</div>
+              <div class="exp-period">Jul - Sep 2025</div>
+              <div class="exp-desc">Proposed a lightweight hybrid MobileNet-V2 with LSTM &amp; Bi-LSTM for student engagement detection. </div>
+              <div class="exp-desc"> Published at the 26th International Arab Conference on Information Technology (ACIT), IEEE, 2025. Extended journal version under review at IAJIT (Special Issue).</div>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-body">
+              <div class="exp-role">From Prompt to Visuals: A Survey on Text-Based Visual Generation</div>
+              <div class="exp-period">2024 – 2025</div>
+              <div class="exp-desc">Analyzed 100+ works on prompt-to-visual generation using GANs, diffusion models, and multi-agent systems. Under review at Cognitive Computation.</div>
+            </div>
+          </div>
+
+          <div class="exp-item" style="border:none; padding-bottom:0;">
+            <div class="exp-body">
+              <div class="exp-role">MSc Research Thesis</div>
+              <div class="exp-period">2020 – 2022</div>
+              <div class="exp-desc">Developed hybrid EfficientNet-B7 + TCN/LSTM/BiLSTM models, improving DAiSEE SOTA by 3.89%.</div>
+              <div class="exp-desc"> Introduced the VRESEE dataset and achieved 94.47% accuracy. </div>
+              <div class="exp-desc"> Published in IEEE Access (100+ citations).</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="margin-bottom:24px;">
+        <div class="section-label" style="margin-bottom:10px;"><h3>Basira Lab, Imperial College London (I-X), UK · 2025 – Present</h3></div>
+        <div class="exp-list">
+
+          <div class="exp-item">
+            <div class="exp-body">
+              <div class="exp-role">Ethical AI Alliance · PI: Prof. <a href="https://scholar.google.com/citations?user=tb6CVoAAAAAJ&hl=en" target="_blank" rel="noopener">Islem Rekik</a></div>
+              <div class="exp-period">Jul 2026 – Present</div>
+              <div class="exp-desc">Contributing to the Global AI Harm Map, a large-scale initiative using dynamic knowledge graphs and LLM debate to characterize AI-related risks.</div>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-body">
+              <div class="exp-role"><a href="https://basiralab.github.io/GNN-CB/" target="_blank" rel="noopener">GNN-CB</a> · PI: Prof. <a href="https://scholar.google.com/citations?user=tb6CVoAAAAAJ&hl=en" target="_blank" rel="noopener">Islem Rekik</a></div>
+              <div class="exp-period">Mar 2026 – Aug 2026</div>
+              <div class="exp-desc">Co-developed the first living, competition-based benchmark with dynamic leaderboards for evaluating humans and LLMs on GNN coding tasks — accepted at EMNLP (main conference).</div>
+            </div>
+          </div>
+
+          <div class="exp-item" style="border:none; padding-bottom:0;">
+            <div class="exp-body">
+              <div class="exp-role">GNNs for Rising Stars (G4RS) Mentee · Supervised by Prof. <a href="https://scholar.google.com/citations?user=tb6CVoAAAAAJ&hl=en" target="_blank" rel="noopener">Islem Rekik</a></div>
+              <div class="exp-period">Nov 2025 – Feb 2026</div>
+              <div class="exp-desc">Completed the selective G4RS mentorship program..</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="margin-bottom:24px;">
+        <div class="section-label" style="margin-bottom:10px;"><h3>Fatima Institution, USA · May 2026 – Dec 2026</h3></div>
+        <div class="exp-list">
+
+          <div class="exp-item" style="border:none; padding-bottom:0;">
+            <div class="exp-body">
+              <div class="exp-role">Research Fellow · Mentor: Dr. Safi Khan</div>
+              <div class="exp-desc">Research on ASR and audio LLMs for Quranic Qira'at evaluation and enhancement.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="margin-bottom:24px;">
+        <div class="section-label" style="margin-bottom:10px;"><h3>University of Galway, Ireland · Jun 2026 – Sep 2026</h3></div>
+        <div class="exp-list">
+
+          <div class="exp-item" style="border:none; padding-bottom:0;">
+            <div class="exp-body">
+              <div class="exp-role">Research Intern · PI: Prof. Saeed Alsamhi</div>
+              <div class="exp-desc">Developing a multi-agent AI system for Parkinson's disease prediction and diagnosis.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom:10px;"><h3>University of Exeter, UK · Jun 2025 – Sep 2025</h3></div>
+        <div class="exp-list">
+
+          <div class="exp-item" style="border:none; padding-bottom:0;">
+            <div class="exp-body">
+              <div class="exp-role">Research Assistant · PI: Prof. Mohammed Abdelsamea &amp; Dr. Ahmed Karam Eldaly</div>
+              <div class="exp-desc">Analyzed literature across causal inference, domain adaptation, and medical imaging.</div>
+              <div class="exp-desc">Contributed to the conceptual framework for causal intelligence in healthcare (arXiv-Under Review).</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <h2>Education</h2>
+      <div class="edu-list">
+        <div class="edu-item">
+          <div class="edu-degree">MSc in Computer Science</div>
+          <div class="edu-school">Alexandria University, Egypt · 2019 – 2022</div>
+          <div class="edu-gpa">GPA: 3.66/4.0 (Excellent)</div>
+          <div style="font-size:13.5px;margin-top:4px;color:var(--muted)">Thesis: Automatic Student Engagement Detection in Online Learning</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">BSc in Computer Science</div>
+          <div class="edu-school">Alexandria University, Egypt · 2015 – 2019</div>
+          <div class="edu-gpa">GPA: 3.68/4.0 (Excellent with Honor – Ranked 1st in Class)</div>
+          <div style="font-size:13.5px;margin-top:4px;color:var(--muted)">Graduation Project: Barter app using graph-based cycle detection for indirect exchange</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEACHING -->
+    <section id="teaching">
+      <h2>Teaching</h2>
+      <div class="exp-item">
+        <div class="exp-body">
+          <div class="exp-where">Alexandria University, Egypt</div>
+          <div class="exp-role">Assistant Lecturer, Computer Science Department</div>
+          <div class="exp-period">2021 – Present</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-body">
+          <div class="exp-role">Computer Vision Course</div>
+          <div class="exp-desc">Designed <a href="https://tasneem-mselim.github.io/hlm-vision/" target="_blank" rel="noopener">a benchmark</a> of 10 image classification competitions with a dynamic leaderboard</div>
+          <div class="exp-desc">Supervised 300+ students in their final projects</div>
+          <div class="exp-desc">Taught the course 8 times, covered CNNs, RNNs, and Siamese networks. </div>
+          </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-body"> 
+          <div class="exp-role">Machine Learning Course</div>
+          <div class="exp-desc">Supervised 200+ students in their final projects.</div>
+          <div class="exp-desc">Designed <a href="https://github.com/tasneem-mselim/FER-ML-Competition/" target="_blank" rel="noopener">a FER-2013 ML competition</a> for 18 teams with hidden test labels and a fully automated evaluation</div>
+          <div class="exp-desc">Taught the course 4 times, covering data preprocessing and machine learning models.</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-body">
+          <div class="exp-role">Introduction to Artificial Intelligence Course</div>
+          <div class="exp-desc">Taught 3 times, covering AI search, logic, and game-playing techniques. </div>
+          <div class="exp-desc">Introduced the first coding curriculum for the course and designed its programming labs. </div>
+          <div class="exp-desc">Supervised 100+ students through final AI projects, from problem formulation to evaluation. </div>
+        </div>
+      </div>
+
+      <div class="exp-item" style="border:none; padding-bottom:0;">
+        <div class="exp-body">
+          <div class="exp-role">Other Courses</div>
+          <div class="exp-desc">Delivered labs in HCI, Software Testing, Software Engineering, Requirement Analysis, Data Structures, Databases, Mobile Development, OOP, and Programming I.</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2>Skills &amp; Awards</h2>
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;">Languages &amp; Frameworks</div>
+        <div class="skills-grid">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">C++</span>
+          <span class="skill-pill">TensorFlow</span>
+          <span class="skill-pill">Keras</span>
+          <span class="skill-pill">scikit-learn</span>
+          <span class="skill-pill">OpenCV</span>
+          <span class="skill-pill">PyTorch</span>
+        </div>
+      </div>
+      <div style="margin-bottom:24px;">
+        <div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;">Research Areas</div>
+        <div class="skills-grid">
+          <span class="skill-pill">Computer Vision</span>
+          <span class="skill-pill">Multi-agent AI</span>
+          <span class="skill-pill">LLM</span>
+          <span class="skill-pill">AI in Education</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;">Awards</div>
+        <ul class="news-list">
+          <li>
+            <span class="news-date">Award</span>
+            <span><strong>Fatima Fellowship</strong> – Selected out of more than 700 applicants.</span>
+          </li>
+          <li>
+            <span class="news-date">Award</span>
+            <span><strong>ACIT</strong> – Best Paper Award.</span>
+          </li>
+          <li>
+            <span class="news-date">Award</span>
+            <span><strong>G4RS Mentorship</strong>, Imperial College London – Selected 1 out of 300+ applicants and certified.</span>
+          </li>
+          <li>
+            <span class="news-date">Award</span>
+            <span><strong>Undergraduate Ranking</strong> – Ranked 1st in undergraduate class.</span>
+          </li>
+          <li>
+            <span class="news-date">Award</span>
+            <span><strong>NASA Space Apps Challenge</strong> – Ranked 4th on panel and 7th on hackathon</span>
+          </li>
+          <li>
+            <span class="news-date">Award</span>
+            <span><strong>Egypt IoT Challenge</strong> – 1st place in ideation pitching camp for an IoT-based solution.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Tasneem Selim · Alexandria, Egypt · Built with HTML &amp; CSS</p>
+    </footer>
+
+  </main>
+
+  <!-- ══ NEWS SIDEBAR (right) ══ -->
+  <aside class="news-sidebar">
+    <h3>Recent News</h3>
+    <ul>
+      <li><span class="news-date">2026</span>Our Paper accepted at <strong>EMNLP</strong> (main conference): <strong><a href="https://basiralab.github.io/GNN-CB/" target="_blank" rel="noopener">GNN-CB</a></strong>, a competition benchmark for GNN coding ability in humans and LLMs — as first author.</li>
+      <li><span class="news-date">2026</span>Began joint research between the AI Alliance and Basira Lab to develop the first <a href="https://ethicalaialliance.org/ai-harm-map" target="_blank" rel="noopener">Global AI Harm Map</a>.</li>
+      <li><span class="news-date">2026</span>Began a research internship at the <strong>University of Galway</strong>, working on multi-agent AI under the supervision of <a href="https://www.insight-centre.org/our-team/saeed-hamood-alsamhi/" target="_blank" rel="noopener">Prof. Saeed Alsamhi</a>.</li>
+      <li><span class="news-date">2026</span>Selected from 700+ applicants to join the <a href="https://fatima.institute/" target="_blank" rel="noopener">Fatima Fellowship</a>, mentored by <a href="https://scholar.google.com/citations?user=xkk8npYAAAAJ&hl=en" target="_blank" rel="noopener">Dr. Safi Khan</a>.</li>
+      <li><span class="news-date">2026</span>Joined the research team of <a href="https://scholar.google.com/citations?user=tb6CVoAAAAAJ&hl=en" target="_blank" rel="noopener">Dr. Islem Rekik</a> at <a href="https://basira-lab.com/" target="_blank" rel="noopener">Basira Lab</a>, Imperial College London, to work on the <a href="https://basiralab.github.io/GNN-CB/" target="_blank" rel="noopener">GNN-CB</a> benchmark.</li>
+      <li><span class="news-date">2026</span>Successfully completed and was certified in the <strong>G4RS program</strong> at Imperial College London.</li>
+      <li><span class="news-date">2025</span>Selected to join the highly competitive <strong>G4RS program</strong> at Imperial College London, under the supervision of <a href="https://scholar.google.com/citations?user=tb6CVoAAAAAJ&hl=en" target="_blank" rel="noopener">Dr. Rekik</a>.</li>
+      <li><span class="news-date">2025</span>Presented at the 26th <strong>International Arab Conference on Information Technology (ACIT)</strong>, IEEE; selected as a best paper for extension and publication in the IAJIT journal.</li>
+      <li><span class="news-date">2025</span>Article paper, on AI in education, accepted at the <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=qrbLDz4AAAAJ&citation_for_view=qrbLDz4AAAAJ:d1gkVwhDpl0C" target="_blank" rel="noopener">26th ACIT Conference (IEEE)</a>.</li>
+      <li><span class="news-date">2025</span>Worked on my Review paper in remote collaboration with <a href="https://researchdirectory.uc.edu/p/elkabaim" target="_blank" rel="noopener">Prof. Islam Elkabani</a> at the <strong>University of Cincinnati</strong>.</li>
+      <li><span class="news-date">2025</span>Began a remote collaboration with <a href="https://experts.exeter.ac.uk/41549-ahmed-karam-eldaly" target="_blank" rel="noopener">Dr. Ahmed Karam Eldaly</a> and <a href="https://experts.exeter.ac.uk/41643-mohammed-abdelsamea" target="_blank" rel="noopener">Dr. Mohammed Abdelsamea</a> at the <strong>University of Exeter</strong> on <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=qrbLDz4AAAAJ&citation_for_view=qrbLDz4AAAAJ:u-x6o8ySG0sC" target="_blank" rel="noopener">"Causal Transfer in Medical Image Analysis"</a> (under review).</li>
+      <li><span class="news-date">2023</span>Promoted to <strong>Assistant Lecturer</strong> in the Computer Science Department at Alexandria University.</li>
+      <li><span class="news-date">2022</span>Received my <strong>MSc</strong> in Computer Science (Computer Vision), Alexandria University.</li>
+      <li><span class="news-date">2022</span>Published my first paper as first author in <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=qrbLDz4AAAAJ&citation_for_view=qrbLDz4AAAAJ:d1gkVwhDpl0C" target="_blank" rel="noopener"><strong>IEEE Access</strong></a>; now cited 100+ times.</li>
+      <li><span class="news-date">2021</span>Started as a <strong>Teaching Assistant</strong> in the Computer Science Department at Alexandria University.</li>
+      <li><span class="news-date">2019</span>Began my <strong>MSc</strong> at Alexandria University.</li>
+      <li><span class="news-date">2019</span>Received my <strong>BSc in Computer Science</strong>, ranking 1st in my class.</li>
+    </ul>
+  </aside>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.topnav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }, { passive: true });
+
+  // ── Publication filters ──
+  const active = { tag: new Set(), inst: new Set(), author: new Set(), status: new Set() };
+  const pubItems = document.querySelectorAll('#pubList .pub-item');
+  const emptyMsg = document.getElementById('pubEmpty');
+
+  function applyFilters() {
+    let visibleCount = 0;
+    pubItems.forEach(item => {
+      const tags = (item.dataset.tag || '').split(' ').filter(Boolean);
+      const inst = item.dataset.inst || '';
+      const author = item.dataset.author || '';
+      const status = item.dataset.status || '';
+
+      const tagMatch = active.tag.size === 0 || tags.some(t => active.tag.has(t));
+      const instMatch = active.inst.size === 0 || active.inst.has(inst);
+      const authorMatch = active.author.size === 0 || active.author.has(author);
+      const statusMatch = active.status.size === 0 || active.status.has(status);
+
+      const show = tagMatch && instMatch && authorMatch && statusMatch;
+      item.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  document.querySelectorAll('.pub-filters .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.parentElement.dataset.group;
+      const value = btn.dataset.value;
+      if (active[group].has(value)) {
+        active[group].delete(value);
+        btn.classList.remove('active');
+      } else {
+        active[group].add(value);
+        btn.classList.add('active');
+      }
+      applyFilters();
+    });
+  });
+
+  document.getElementById('pubFilterClear').addEventListener('click', () => {
+    Object.keys(active).forEach(g => active[g].clear());
+    document.querySelectorAll('.pub-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    applyFilters();
+  });
+</script>
+
+</body>
+</html>
